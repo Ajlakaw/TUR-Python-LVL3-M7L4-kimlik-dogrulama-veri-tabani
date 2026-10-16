@@ -78,3 +78,13 @@ def test_kullanici_listesi(tmp_path, monkeypatch, capsys):
     sonuc = capsys.readouterr().out
 
     assert "zeynep" in sonuc
+
+
+###def test_ayni_kullanici(setup_database):
+ ###   ilk = add_user("Ali Süper Ultra Adam", "ali@ekmail.com", "aliaslindasüpheliai123")
+ ###   ikinci = add_user("Ali Süper Ultra Adam", "ali@ekmail.com", "aliaslindasüpheliai123")
+
+###    assert ilk is True
+###    assert ikinci is False
+
+### ALİ SÜPER ADAMLARINDA KODLARDA YAZILMA HAKKI VARDIR ONLARINDA HAKLARI VARDIR BİZİ DUYUN PYTHON BİZİ DUY PYTHON
