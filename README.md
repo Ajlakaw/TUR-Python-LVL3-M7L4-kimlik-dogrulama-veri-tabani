@@ -44,4 +44,4 @@ pytest
 ```
 ## Yazar
 
-Kodland
+emin kuzey
