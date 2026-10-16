@@ -2,6 +2,7 @@ import pytest
 import sqlite3
 import os
 from registration.registration import create_db, add_user, authenticate_user, display_users
+from registration import registration as reg
 
 @pytest.fixture(scope="module")
 def setup_database():
@@ -44,3 +45,36 @@ Var olmayan bir kullanıcıyla doğrulama yapmayı test etme.
 Yanlış şifreyle doğrulama yapmayı test etme.
 Kullanıcı listesinin doğru şekilde görüntülenmesini test etme.
 """
+
+
+def test_ayni_kullanici(tmp_path, monkeypatch):
+    monkeypatch.setattr(reg, "DB_NAME", str(tmp_path / "test.db"))
+    reg.create_db()
+
+    ilk = reg.add_user("ali", "ali@example.com", "1234")
+    ikinci = reg.add_user("ali", "ali@example.com", "1234")
+
+    assert ilk is True
+    assert ikinci is False
+
+
+def test_basarili_giris(tmp_path, monkeypatch):
+    monkeypatch.setattr(reg, "DB_NAME", str(tmp_path / "giris.db"))
+    reg.create_db()
+
+    reg.add_user("deneme", "deneme@mail.com", "1234")
+
+    sonuc = reg.authenticate_user("deneme", "1234")
+
+    assert sonuc is True
+
+def test_kullanici_listesi(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(reg, "DB_NAME", str(tmp_path / "liste.db"))
+    reg.create_db()
+
+    reg.add_user("zeynep", "zeynep@mail.com", "1234")
+    reg.display_users()
+
+    sonuc = capsys.readouterr().out
+
+    assert "zeynep" in sonuc
